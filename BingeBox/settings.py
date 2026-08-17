@@ -134,6 +134,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
+    'https://bingebox-frontend-jrjo.onrender.com',
 ]
 LOGIN_REDIRECT_URL = "/watchlist/api/media/"
 
