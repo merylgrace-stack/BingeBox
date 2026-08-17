@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}BingeBox - Watchlist{% endblock %}
+
+{% block content %}
+
+    <h2>My Watchlist</h2>
+
+    {% for item in media %}
+        <h3>{{ item.title }}</h3>
+        <p>Type: {{ item.type }}</p>
+        <p>Status: {{ item.status }}</p>
+        <p>Rating: {{ item.rating }}</p>
+        <hr>
+    {% endfor %}
+
+{% endblock %}
