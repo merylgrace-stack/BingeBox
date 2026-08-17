@@ -7,7 +7,8 @@ from django.http import JsonResponse
 
 from .models import Media
 from .serializers import MediaSerializer
-
+from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
 
 def home(request):
     media = Media.objects.all()
@@ -80,3 +81,37 @@ def api_test(request):
         "message": "Welcome to BingeBox API",
         "status": "working"
     })
+
+from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
+
+
+@api_view(['POST'])
+def signup(request):
+    username = request.data.get('username')
+    password = request.data.get('password')
+
+    if not username or not password:
+        return Response(
+            {"error": "Username and password are required."},
+            status=400
+        )
+
+    if User.objects.filter(username=username).exists():
+        return Response(
+            {"error": "Username already exists."},
+            status=400
+        )
+
+    user = User.objects.create_user(
+        username=username,
+        password=password
+    )
+
+    token = Token.objects.create(user=user)
+
+    return Response({
+        "message": "Account created successfully.",
+        "token": token.key,
+        "username": user.username
+    }, status=201)
